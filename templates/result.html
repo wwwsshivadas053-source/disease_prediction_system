@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Result | MedVision AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{
+font-family:'Poppins',sans-serif;
+background:#f8fafc;
+}
+</style>
+</head>
+
+<body class="text-slate-900">
+
+{% include "_navbar.html" %}
+
+<section class="py-10">
+<div class="max-w-7xl mx-auto px-6">
+
+<div class="rounded-[2rem] bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-900 p-8 text-white shadow-2xl shadow-blue-500/10 md:p-10">
+<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+<div>
+<span class="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-cyan-200">
+{{ _("AI Diagnosis Result") }}
+</span>
+<h1 class="mt-5 text-4xl font-extrabold md:text-5xl">{{ disease }}</h1>
+<p class="mt-3 max-w-2xl text-slate-300">
+{{ _("Review the confidence score, disease explanation, and recommended next steps.") }}
+</p>
+{% if image_quality_warnings %}
+<div class="mt-5 rounded-2xl border border-amber-300/40 bg-amber-400/10 p-4 text-sm font-medium text-amber-100">
+<p class="font-bold">Image quality warning</p>
+<ul class="mt-2 space-y-1">
+{% for warning in image_quality_warnings %}
+<li>{{ warning }}</li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+</div>
+<div class="rounded-3xl bg-white/10 p-5 text-center">
+<p class="text-sm font-semibold text-cyan-100">{{ _("Confidence Score") }}</p>
+<p class="mt-2 text-5xl font-extrabold text-cyan-300">{{ confidence }}%</p>
+</div>
+</div>
+</div>
+
+<div class="mt-8 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+
+<div class="rounded-3xl bg-white p-8 shadow-xl shadow-slate-200">
+<h2 class="text-2xl font-extrabold">{{ _("Uploaded Image") }}</h2>
+<img src="{{ image_path }}" class="mt-6 w-full rounded-3xl object-cover shadow-md" alt="Uploaded image">
+
+{% if image and heatmap %}
+<div class="mt-8 grid gap-5 md:grid-cols-2">
+<div>
+<h3 class="font-bold text-slate-700">{{ _("Original Image") }}</h3>
+<img src="{{ image }}" class="mt-3 rounded-2xl" alt="Original uploaded image">
+</div>
+<div>
+<h3 class="font-bold text-slate-700">{{ _("AI Attention Map") }}</h3>
+<img src="{{ heatmap }}" class="mt-3 rounded-2xl" alt="AI attention heatmap">
+</div>
+</div>
+{% endif %}
+</div>
+
+<div class="space-y-6">
+<div class="rounded-3xl bg-white p-8 shadow-xl shadow-slate-200">
+<div class="flex items-center justify-between gap-4">
+<h2 class="text-2xl font-extrabold">{{ _("Prediction Summary") }}</h2>
+<span class="rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700">
+{{ _("Completed") }}
+</span>
+</div>
+
+<div class="mt-7">
+<div class="flex items-center justify-between text-sm font-semibold text-slate-500">
+<span>{{ _("Confidence") }}</span>
+<span>{{ confidence }}%</span>
+</div>
+<div class="mt-3 h-4 rounded-full bg-slate-200">
+<div class="h-4 rounded-full bg-gradient-to-r from-blue-600 to-cyan-400" style="width: {{ confidence }}%;"></div>
+</div>
+</div>
+
+<div class="mt-8 grid gap-5">
+<div class="rounded-2xl bg-blue-50 p-5">
+<h3 class="text-lg font-bold text-blue-950">{{ _("Explanation") }}</h3>
+<p class="mt-3 leading-7 text-slate-700">{{ explanation }}</p>
+</div>
+
+<div class="rounded-2xl bg-emerald-50 p-5">
+<h3 class="text-lg font-bold text-emerald-950">{{ _("Suggested Solution") }}</h3>
+<p class="mt-3 leading-7 text-slate-700">{{ solution }}</p>
+</div>
+</div>
+</div>
+
+{% if details %}
+<div class="rounded-3xl bg-white p-8 shadow-xl shadow-slate-200">
+<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<h2 class="text-2xl font-extrabold">{{ _("Disease Details") }}</h2>
+<span class="rounded-full bg-amber-100 px-4 py-2 text-sm font-bold text-amber-700">
+{{ details.risk_level }}
+</span>
+</div>
+
+<div class="mt-7 grid gap-5 md:grid-cols-2">
+<div class="rounded-2xl border border-slate-200 p-5">
+<h3 class="font-bold text-slate-900">{{ _("Common Visible Signs") }}</h3>
+<ul class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+{% for sign in details.common_signs %}
+<li class="flex gap-3">
+<span class="mt-2 h-2 w-2 rounded-full bg-blue-600"></span>
+<span>{{ sign }}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+
+<div class="rounded-2xl border border-slate-200 p-5">
+<h3 class="font-bold text-slate-900">{{ _("Care Focus") }}</h3>
+<ul class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+{% for step in details.care_focus %}
+<li class="flex gap-3">
+<span class="mt-2 h-2 w-2 rounded-full bg-emerald-600"></span>
+<span>{{ step }}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+</div>
+</div>
+{% endif %}
+
+<div class="grid gap-4 sm:grid-cols-2">
+<a href="{% if prediction_id %}{{ url_for('download_report', prediction_id=prediction_id) }}{% else %}{{ url_for('download_report') }}{% endif %}" class="rounded-2xl bg-blue-600 py-4 text-center font-bold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-700">
+{{ _("Download PDF Report") }}
+</a>
+<a href="{{ url_for('dashboard') }}" class="rounded-2xl bg-slate-900 py-4 text-center font-bold text-white shadow-lg shadow-slate-500/20 transition hover:bg-black">
+{{ _("Analyze Another Image") }}
+</a>
+</div>
+</div>
+
+</div>
+
+<div class="mt-8 rounded-3xl bg-white p-8 shadow-xl shadow-slate-200">
+<h2 class="text-3xl font-extrabold">{{ _("Medical Use Reminder") }}</h2>
+<div class="mt-6 grid gap-5 md:grid-cols-3">
+<div class="rounded-2xl bg-blue-50 p-5">
+<h3 class="font-bold text-blue-950">{{ _("AI Support") }}</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">The result supports awareness and screening, but it is not a final diagnosis.</p>
+</div>
+<div class="rounded-2xl bg-emerald-50 p-5">
+<h3 class="font-bold text-emerald-950">{{ _("Clinical Review") }}</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">A clinician can confirm the condition using examination, dermoscopy, or biopsy.</p>
+</div>
+<div class="rounded-2xl bg-purple-50 p-5">
+<h3 class="font-bold text-purple-950">{{ _("Follow Changes") }}</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">Track new growth, color change, pain, itching, bleeding, or non-healing areas.</p>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+</body>
+</html>

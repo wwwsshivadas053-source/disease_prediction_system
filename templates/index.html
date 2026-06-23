@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedVision AI - Smart Disease Detection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{
+font-family:'Poppins',sans-serif;
+}
+.glass{
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.14);
+}
+</style>
+</head>
+
+<body class="bg-slate-950 text-white overflow-x-hidden">
+
+{% include "_navbar.html" %}
+
+<section class="relative overflow-hidden">
+<div class="absolute left-0 top-20 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl"></div>
+<div class="absolute right-10 top-40 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
+<div class="absolute bottom-0 left-1/2 h-80 w-80 rounded-full bg-emerald-400/10 blur-3xl"></div>
+
+<div class="relative max-w-7xl mx-auto px-6 py-24 lg:py-28">
+<div class="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+
+<div>
+<span class="inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-200">
+{{ _("AI-powered skin disease screening") }}
+</span>
+
+<h1 class="mt-8 text-5xl font-extrabold leading-tight md:text-7xl">
+{{ _("Detect possible skin diseases with clearer AI guidance.") }}
+</h1>
+
+<p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+{{ _("Upload a skin image, get an AI-assisted prediction, review disease-specific explanation, and download a structured report for follow-up discussion.") }}
+</p>
+
+<div class="mt-10 flex flex-col gap-4 sm:flex-row">
+<a href="{% if is_logged_in %}{{ url_for('dashboard') }}{% else %}{{ url_for('register') }}{% endif %}" class="rounded-2xl bg-cyan-400 px-8 py-4 text-center text-lg font-bold text-slate-950 shadow-xl shadow-cyan-500/20 transition hover:bg-cyan-300">
+{% if is_logged_in %}{{ _("Open Dashboard") }}{% else %}{{ _("Start Free Analysis") }}{% endif %}
+</a>
+<a href="#features" class="rounded-2xl border border-white/20 px-8 py-4 text-center text-lg font-semibold text-white transition hover:bg-white hover:text-slate-950">
+{{ _("Explore Features") }}
+</a>
+</div>
+
+<div class="mt-10 grid max-w-2xl gap-4 sm:grid-cols-3">
+<div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+<div class="text-3xl font-extrabold text-cyan-300">7</div>
+<p class="mt-1 text-sm text-slate-300">{{ _("Disease classes") }}</p>
+</div>
+<div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+<div class="text-3xl font-extrabold text-cyan-300">PDF</div>
+<p class="mt-1 text-sm text-slate-300">{{ _("Report export") }}</p>
+</div>
+<div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+<div class="text-3xl font-extrabold text-cyan-300">24/7</div>
+<p class="mt-1 text-sm text-slate-300">{{ _("AI availability") }}</p>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-[2rem] p-5 shadow-2xl shadow-cyan-500/10">
+<div class="rounded-[1.5rem] bg-white p-5 text-slate-900">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-semibold text-slate-500">{{ _("Sample AI Result") }}</p>
+<h2 class="mt-1 text-3xl font-extrabold">Melanoma</h2>
+</div>
+<span class="rounded-full bg-emerald-100 px-4 py-2 text-sm font-bold text-emerald-700">94.7%</span>
+</div>
+
+<div class="mt-6 overflow-hidden rounded-3xl">
+<img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80" class="h-72 w-full object-cover" alt="Medical AI dashboard preview">
+</div>
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2">
+<div class="rounded-2xl bg-blue-50 p-4">
+<h3 class="font-bold text-blue-900">{{ _("Explanation") }}</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">
+Disease-specific notes help users understand visible signs and why follow-up may be needed.
+</p>
+</div>
+<div class="rounded-2xl bg-cyan-50 p-4">
+<h3 class="font-bold text-cyan-900">{{ _("Suggested Solution") }}</h3>
+<p class="mt-2 text-sm leading-6 text-slate-600">
+Suggested next steps guide the user toward monitoring, sun protection, or clinical review.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="features" class="py-20">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-3xl">
+<span class="text-sm font-bold uppercase tracking-[0.3em] text-cyan-300">{{ _("Features") }}</span>
+<h2 class="mt-4 text-4xl font-extrabold md:text-5xl">{{ _("Designed for a complete prediction workflow.") }}</h2>
+</div>
+
+<div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+<div class="glass rounded-3xl p-7">
+<div class="text-sm font-bold text-cyan-300">01</div>
+<h3 class="mt-4 text-2xl font-bold">{{ _("Disease Detection") }}</h3>
+<p class="mt-4 leading-7 text-slate-300">Upload images and receive AI predictions with confidence scores.</p>
+</div>
+
+<div class="glass rounded-3xl p-7">
+<div class="text-sm font-bold text-cyan-300">02</div>
+<h3 class="mt-4 text-2xl font-bold">{{ _("Disease Education") }}</h3>
+<p class="mt-4 leading-7 text-slate-300">Read disease-specific explanation, warning signs, and next steps.</p>
+</div>
+
+<div class="glass rounded-3xl p-7">
+<div class="text-sm font-bold text-cyan-300">03</div>
+<h3 class="mt-4 text-2xl font-bold">{{ _("PDF Reports") }}</h3>
+<p class="mt-4 leading-7 text-slate-300">Download professional-looking summaries for records or consultation.</p>
+</div>
+
+<div class="glass rounded-3xl p-7">
+<div class="text-sm font-bold text-cyan-300">04</div>
+<h3 class="mt-4 text-2xl font-bold">{{ _("Dashboard Charts") }}</h3>
+<p class="mt-4 leading-7 text-slate-300">Track prediction history and disease distribution visually.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="bg-white py-20 text-slate-900">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+<div>
+<span class="text-sm font-bold uppercase tracking-[0.3em] text-blue-600">{{ _("Disease Guide") }}</span>
+<h2 class="mt-4 text-4xl font-extrabold">Each disease includes explanation and action guidance.</h2>
+<p class="mt-5 leading-8 text-slate-600">
+The platform covers the trained classes and shows practical context for each result. Always use the AI output as support, not as a final diagnosis.
+</p>
+</div>
+
+<div class="grid gap-5 md:grid-cols-2">
+{% for disease in disease_cards %}
+<div class="rounded-3xl border border-slate-200 bg-slate-50 p-6 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200">
+<div class="text-sm font-bold text-blue-600">{{ disease.risk_level }}</div>
+<h3 class="mt-2 text-xl font-extrabold">{{ disease.name }}</h3>
+<p class="mt-3 text-sm leading-6 text-slate-600">{{ disease.summary }}</p>
+<p class="mt-4 rounded-2xl bg-white p-4 text-sm font-medium leading-6 text-slate-700">
+{{ disease.solution }}
+</p>
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-20">
+<div class="max-w-7xl mx-auto px-6">
+<div class="rounded-[2rem] bg-gradient-to-br from-blue-600 to-cyan-400 p-10 text-center shadow-2xl shadow-cyan-500/20 md:p-14">
+<h2 class="text-4xl font-extrabold text-white md:text-5xl">{{ _("Start with the dashboard.") }}</h2>
+<p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-blue-50">
+Upload an image, review the result, download a report, and monitor your prediction distribution from one place.
+</p>
+<a href="{% if is_logged_in %}{{ url_for('dashboard') }}{% else %}{{ url_for('register') }}{% endif %}" class="mt-8 inline-block rounded-2xl bg-white px-8 py-4 font-bold text-blue-700 transition hover:bg-slate-100">
+{% if is_logged_in %}{{ _("Go to Dashboard") }}{% else %}{{ _("Create Account") }}{% endif %}
+</a>
+</div>
+</div>
+</section>
+
+<footer class="border-t border-white/10 bg-slate-900 py-8">
+<div class="max-w-7xl mx-auto px-6 text-center">
+<h3 class="text-2xl font-extrabold text-cyan-300">MedVision AI</h3>
+<p class="mt-3 text-slate-400">Developed by Prajwal TS</p>
+</div>
+</footer>
+
+</body>
+</html>

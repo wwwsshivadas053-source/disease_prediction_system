@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ _("Admin Dashboard") }} | MedVision AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{
+font-family:'Poppins','Noto Sans Kannada',sans-serif;
+background:#f8fafc;
+}
+</style>
+</head>
+
+<body class="text-slate-900">
+
+{% include "_navbar.html" %}
+
+<section class="py-8 md:py-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6">
+
+<div class="rounded-[2rem] bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-900 p-6 text-white shadow-2xl shadow-blue-500/10 md:p-10">
+<div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+<div>
+<span class="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-cyan-200">
+{{ _("Admin Dashboard") }}
+</span>
+<h1 class="mt-5 text-3xl font-extrabold leading-tight md:text-5xl">
+{{ _("Advanced Admin Control Center") }}
+</h1>
+<p class="mt-4 max-w-3xl leading-7 text-slate-300">
+{{ _("Manage users, predictions, feedback, and model review status from one responsive page.") }}
+</p>
+</div>
+
+<div class="rounded-3xl border border-white/10 bg-white/10 p-5">
+<p class="text-sm font-semibold text-cyan-100">{{ _("Model Review") }}</p>
+<p class="mt-2 text-4xl font-extrabold text-cyan-300">{{ verified_accuracy }}%</p>
+<p class="mt-2 text-sm text-slate-300">
+{{ correct_total }} / {{ reviewed_total }} {{ _("Reviewed") }}
+</p>
+</div>
+</div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="mt-6 rounded-3xl border border-blue-200 bg-blue-50 p-5 text-sm font-semibold text-blue-800">
+{% for message in messages %}
+<p>{{ message }}</p>
+{% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+<div class="rounded-3xl bg-white p-6 shadow-lg shadow-slate-200">
+<p class="text-sm font-semibold text-slate-500">{{ _("Total Users") }}</p>
+<p class="mt-3 text-4xl font-extrabold text-blue-600">{{ total_users }}</p>
+</div>
+<div class="rounded-3xl bg-white p-6 shadow-lg shadow-slate-200">
+<p class="text-sm font-semibold text-slate-500">{{ _("Total Predictions") }}</p>
+<p class="mt-3 text-4xl font-extrabold text-emerald-600">{{ total_predictions }}</p>
+</div>
+<div class="rounded-3xl bg-white p-6 shadow-lg shadow-slate-200">
+<p class="text-sm font-semibold text-slate-500">{{ _("Most Common Disease") }}</p>
+<p class="mt-3 text-2xl font-extrabold text-slate-900">{{ common_disease }}</p>
+</div>
+<div class="rounded-3xl bg-white p-6 shadow-lg shadow-slate-200">
+<p class="text-sm font-semibold text-slate-500">{{ _("Needs Review") }}</p>
+<p class="mt-3 text-4xl font-extrabold text-amber-600">{{ needs_review }}</p>
+</div>
+<div class="rounded-3xl bg-white p-6 shadow-lg shadow-slate-200">
+<p class="text-sm font-semibold text-slate-500">{{ _("Verified Accuracy") }}</p>
+<p class="mt-3 text-4xl font-extrabold text-cyan-600">{{ verified_accuracy }}%</p>
+</div>
+</div>
+
+<div class="mt-6 rounded-3xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900">
+<strong>{{ _("Model Review") }}:</strong>
+{{ _("Model accuracy needs admin-confirmed labels. Mark predictions as correct or incorrect after clinical/user verification.") }}
+</div>
+
+<form action="{{ url_for('admin') }}" method="GET" class="mt-8 grid gap-4 rounded-3xl bg-white p-5 shadow-lg shadow-slate-200 md:grid-cols-[1fr_220px_auto]">
+<input
+type="text"
+name="search"
+value="{{ search }}"
+placeholder="{{ _('Search') }}"
+class="rounded-2xl border border-slate-200 p-4 outline-none transition focus:border-blue-500">
+<select name="review_status" class="rounded-2xl border border-slate-200 p-4 outline-none transition focus:border-blue-500">
+<option value="all" {% if review_status == "all" %}selected{% endif %}>{{ _("All") }}</option>
+<option value="unreviewed" {% if review_status == "unreviewed" %}selected{% endif %}>{{ _("Unreviewed") }}</option>
+<option value="needs_review" {% if review_status == "needs_review" %}selected{% endif %}>{{ _("Needs Review") }}</option>
+<option value="correct" {% if review_status == "correct" %}selected{% endif %}>{{ _("Correct") }}</option>
+<option value="incorrect" {% if review_status == "incorrect" %}selected{% endif %}>{{ _("Incorrect") }}</option>
+</select>
+<button type="submit" class="rounded-2xl bg-slate-900 px-6 py-4 font-bold text-white transition hover:bg-black">
+{{ _("Filter") }}
+</button>
+</form>
+
+<div class="mt-8 grid gap-8 xl:grid-cols-[0.85fr_1.15fr]">
+
+<section class="rounded-3xl bg-white p-5 shadow-xl shadow-slate-200 md:p-7">
+<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h2 class="text-2xl font-extrabold">{{ _("Users") }}</h2>
+<p class="mt-1 text-sm text-slate-500">{{ _("Save") }}, {{ _("Update") }}, {{ _("Delete") }}</p>
+</div>
+<span class="rounded-full bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700">{{ users|length }}</span>
+</div>
+
+<div class="mt-6 space-y-4">
+{% if users %}
+{% for user in users %}
+<div class="rounded-3xl border border-slate-200 p-4">
+<form action="{{ url_for('admin_update_user', user_id=user.id) }}" method="POST" class="grid gap-3">
+<div class="grid gap-3 md:grid-cols-2">
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Name") }}</label>
+<input name="name" value="{{ user.name }}" required class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+</div>
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Email") }}</label>
+<input name="email" type="email" value="{{ user.email }}" required class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+</div>
+</div>
+<div class="grid gap-3 md:grid-cols-[1fr_160px]">
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Password") }}</label>
+<input name="password" type="password" placeholder="Leave blank to keep current" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+</div>
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Role") }}</label>
+<select name="role" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+<option value="user" {% if user.role == "user" %}selected{% endif %}>User</option>
+<option value="admin" {% if user.role == "admin" %}selected{% endif %}>Admin</option>
+</select>
+</div>
+</div>
+<button type="submit" class="rounded-2xl bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700">
+{{ _("Save") }}
+</button>
+</form>
+<form action="{{ url_for('admin_delete_user', user_id=user.id) }}" method="POST" class="mt-3" onsubmit="return confirm('Delete this user and related data?');">
+<button type="submit" class="w-full rounded-2xl bg-red-500 px-5 py-3 font-bold text-white transition hover:bg-red-600">
+{{ _("Delete") }}
+</button>
+</form>
+</div>
+{% endfor %}
+{% else %}
+<p class="rounded-2xl border border-dashed border-slate-300 p-6 text-center text-slate-500">{{ _("No data available.") }}</p>
+{% endif %}
+</div>
+</section>
+
+<section class="rounded-3xl bg-white p-5 shadow-xl shadow-slate-200 md:p-7">
+<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h2 class="text-2xl font-extrabold">{{ _("Predictions") }}</h2>
+<p class="mt-1 text-sm text-slate-500">{{ _("Model Review") }} / {{ _("Verified Accuracy") }}</p>
+</div>
+<span class="rounded-full bg-amber-50 px-4 py-2 text-sm font-bold text-amber-700">{{ predictions|length }}</span>
+</div>
+
+<div class="mt-6 space-y-5">
+{% if predictions %}
+{% for prediction in predictions %}
+<article class="rounded-3xl border border-slate-200 p-4">
+<div class="grid gap-4 lg:grid-cols-[120px_1fr]">
+<img src="{{ prediction.image_path }}" alt="{{ prediction.disease }}" class="h-32 w-full rounded-2xl object-cover lg:h-full">
+<div class="min-w-0">
+<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+<div>
+<h3 class="text-xl font-extrabold">{{ prediction.disease }}</h3>
+<p class="mt-1 text-sm text-slate-500">{{ prediction.user_name }} · {{ prediction.user_email }}</p>
+<p class="mt-1 text-sm text-slate-500">{{ prediction.created_at }}</p>
+</div>
+<span class="w-fit rounded-full px-3 py-1 text-sm font-bold {% if prediction.review_status == 'correct' %}bg-emerald-100 text-emerald-700{% elif prediction.review_status == 'incorrect' %}bg-red-100 text-red-700{% elif prediction.review_status == 'needs_review' %}bg-amber-100 text-amber-700{% else %}bg-slate-100 text-slate-700{% endif %}">
+{{ _(prediction.review_status.replace("_", " ").title()) }}
+</span>
+</div>
+
+<form action="{{ url_for('admin_update_prediction', prediction_id=prediction.id) }}" method="POST" class="mt-4 grid gap-3">
+<div class="grid gap-3 md:grid-cols-3">
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Disease") }}</label>
+<select name="disease" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+{% for disease in disease_options %}
+<option value="{{ disease }}" {% if disease == prediction.disease %}selected{% endif %}>{{ disease }}</option>
+{% endfor %}
+</select>
+</div>
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Confidence") }}</label>
+<input name="confidence" type="number" step="0.01" min="0" max="100" value="{{ '%.2f'|format(prediction.confidence) }}" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+</div>
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Review") }}</label>
+<select name="review_status" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+<option value="unreviewed" {% if prediction.review_status == "unreviewed" %}selected{% endif %}>{{ _("Unreviewed") }}</option>
+<option value="needs_review" {% if prediction.review_status == "needs_review" %}selected{% endif %}>{{ _("Needs Review") }}</option>
+<option value="correct" {% if prediction.review_status == "correct" %}selected{% endif %}>{{ _("Correct") }}</option>
+<option value="incorrect" {% if prediction.review_status == "incorrect" %}selected{% endif %}>{{ _("Incorrect") }}</option>
+</select>
+</div>
+</div>
+<div class="grid gap-3 md:grid-cols-[0.75fr_1.25fr]">
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Verified Disease") }}</label>
+<select name="verified_disease" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+<option value="">Not verified</option>
+{% for disease in disease_options %}
+<option value="{{ disease }}" {% if disease == prediction.verified_disease %}selected{% endif %}>{{ disease }}</option>
+{% endfor %}
+</select>
+</div>
+<div>
+<label class="mb-1 block text-sm font-semibold text-slate-600">{{ _("Admin Notes") }}</label>
+<input name="admin_notes" value="{{ prediction.admin_notes }}" placeholder="Clinical/user verification note" class="w-full rounded-2xl border border-slate-200 p-3 outline-none focus:border-blue-500">
+</div>
+</div>
+<button type="submit" class="rounded-2xl bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700">
+{{ _("Save") }}
+</button>
+</form>
+<form action="{{ url_for('admin_delete_prediction', prediction_id=prediction.id) }}" method="POST" class="mt-3" onsubmit="return confirm('Delete this prediction?');">
+<button type="submit" class="w-full rounded-2xl bg-red-500 px-5 py-3 font-bold text-white transition hover:bg-red-600">
+{{ _("Delete") }}
+</button>
+</form>
+</div>
+</div>
+</article>
+{% endfor %}
+{% else %}
+<p class="rounded-2xl border border-dashed border-slate-300 p-6 text-center text-slate-500">{{ _("No data available.") }}</p>
+{% endif %}
+</div>
+</section>
+
+</div>
+
+<section class="mt-8 rounded-3xl bg-slate-900 p-5 text-white shadow-xl md:p-7">
+<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h2 class="text-2xl font-extrabold">{{ _("Recent Feedback") }}</h2>
+<p class="mt-1 text-sm text-slate-300">{{ _("Feedback") }}</p>
+</div>
+<span class="rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-cyan-200">{{ feedback_entries|length }}</span>
+</div>
+
+<div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+{% if feedback_entries %}
+{% for entry in feedback_entries %}
+<div class="rounded-3xl bg-white/10 p-5">
+<div class="flex items-start justify-between gap-4">
+<div>
+<h3 class="font-bold">{{ entry.name }}</h3>
+<p class="mt-1 text-sm text-slate-300">{{ entry.email }}</p>
+</div>
+<span class="rounded-full bg-cyan-400 px-3 py-1 text-sm font-bold text-slate-950">{{ entry.rating }}/5</span>
+</div>
+<p class="mt-4 text-sm leading-6 text-slate-200">{{ entry.message }}</p>
+<form action="{{ url_for('admin_delete_feedback', feedback_id=entry.id) }}" method="POST" class="mt-4" onsubmit="return confirm('Delete this feedback?');">
+<button type="submit" class="rounded-2xl bg-red-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-600">
+{{ _("Delete") }}
+</button>
+</form>
+</div>
+{% endfor %}
+{% else %}
+<p class="rounded-2xl border border-dashed border-white/20 p-6 text-center text-slate-300">{{ _("No data available.") }}</p>
+{% endif %}
+</div>
+</section>
+
+</div>
+</section>
+
+</body>
+</html>

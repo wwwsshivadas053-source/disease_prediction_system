@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="{{ current_language }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | MedVision AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{
+font-family:'Poppins',sans-serif;
+background:#f8fafc;
+}
+</style>
+</head>
+<body class="text-slate-900">
+
+{% include "_navbar.html" %}
+
+<section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-cyan-900 py-20 text-white">
+<div class="absolute left-10 top-10 h-40 w-40 rounded-full bg-cyan-400/20 blur-3xl"></div>
+<div class="absolute bottom-0 right-20 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl"></div>
+
+<div class="relative max-w-7xl mx-auto px-6">
+<div class="max-w-3xl">
+<span class="rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-cyan-200">
+{{ _("About MedVision AI") }}
+</span>
+<h1 class="mt-6 text-5xl font-extrabold leading-tight md:text-6xl">
+AI support for faster, clearer skin-image screening.
+</h1>
+<p class="mt-6 text-lg leading-8 text-slate-200">
+MedVision AI helps users upload skin images, receive AI-assisted predictions, understand possible disease context, and download structured reports. It is designed as a decision-support tool, not a replacement for a doctor.
+</p>
+</div>
+</div>
+</section>
+
+<section class="py-16">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid gap-8 lg:grid-cols-3">
+
+<div class="rounded-3xl bg-white p-8 shadow-lg shadow-slate-200">
+<div class="text-4xl">01</div>
+<h2 class="mt-5 text-2xl font-bold">{{ _("Image Analysis") }}</h2>
+<p class="mt-4 text-slate-600">
+The platform accepts uploaded skin images and uses a trained model to estimate the most likely disease class with a confidence score.
+</p>
+</div>
+
+<div class="rounded-3xl bg-white p-8 shadow-lg shadow-slate-200">
+<div class="text-4xl">02</div>
+<h2 class="mt-5 text-2xl font-bold">{{ _("Disease Guidance") }}</h2>
+<p class="mt-4 text-slate-600">
+Each result includes disease-specific explanation, visible warning signs, and practical next steps so the output is easier to interpret.
+</p>
+</div>
+
+<div class="rounded-3xl bg-white p-8 shadow-lg shadow-slate-200">
+<div class="text-4xl">03</div>
+<h2 class="mt-5 text-2xl font-bold">{{ _("Reports & History") }}</h2>
+<p class="mt-4 text-slate-600">
+Users can track previous predictions, review confidence levels, and download PDF reports for personal records or clinical discussion.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="pb-16">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+
+<div class="rounded-3xl bg-slate-900 p-8 text-white shadow-xl">
+<h2 class="text-3xl font-bold">{{ _("Important Medical Note") }}</h2>
+<p class="mt-5 leading-8 text-slate-300">
+AI predictions can be affected by lighting, blur, camera angle, skin tone representation, and model limitations. If a lesion is new, changing, painful, itchy, bleeding, or visually concerning, consult a qualified healthcare professional even if the AI result appears low risk.
+</p>
+<a href="{{ url_for('dashboard') if is_logged_in else url_for('register') }}" class="mt-8 inline-block rounded-full bg-cyan-400 px-6 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300">
+{{ _("Open Dashboard") if is_logged_in else _("Create Account") }}
+</a>
+</div>
+
+<div class="rounded-3xl bg-white p-8 shadow-lg shadow-slate-200">
+<h2 class="text-3xl font-bold">{{ _("Diseases Covered") }}</h2>
+<div class="mt-6 grid gap-4 md:grid-cols-2">
+{% for disease in disease_cards %}
+<div class="rounded-2xl border border-slate-200 p-5">
+<div class="text-sm font-semibold text-blue-600">{{ disease.risk_level }}</div>
+<h3 class="mt-2 text-lg font-bold">{{ disease.name }}</h3>
+<p class="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">
+{{ disease.summary }}
+</p>
+</div>
+{% endfor %}
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+</body>
+</html>
