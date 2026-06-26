@@ -221,6 +221,7 @@ Generate PDF Report
 <img width="1336" height="640" alt="ad2" src="https://github.com/user-attachments/assets/9ef39f96-eb6b-4d94-bd79-407bf0222b1f" />
 
 ---
+---
 
 # 🚀 Installation
 
