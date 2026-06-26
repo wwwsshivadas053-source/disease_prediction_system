@@ -201,27 +201,87 @@ Generate PDF Report
 
 # 📸 Screenshots
 
+## Home Page
 
-```
-<img width="1346" height="634" alt="re" src="https://github.com/user-attachments/assets/9a93bb9c-1eb4-424b-8799-af49366d9b51" />
-<img width="1342" height="626" alt="login" src="https://github.com/user-attachments/assets/2a9cf1f9-7683-440f-83d2-c247579287ae" />
-<img width="1342" height="643" alt="home" src="https://github.com/user-attachments/assets/cf47c0f9-efd7-42cb-8340-d3dbd82cd628" />
-<img width="1337" height="638" alt="d1" src="https://github.com/user-attachments/assets/2b50f2d1-1166-41a9-b535-6f2ba67431d0" />
-<img width="1336" height="640" alt="d2" src="https://github.com/user-attachments/assets/d220540c-a9bf-4cfd-9a80-4b39e356610d" />
-<img width="1342" height="639" alt="d3" src="https://github.com/user-attachments/assets/70733c04-d5e6-4c6e-a6c7-c723e98fca3f" />
-<img width="1340" height="640" alt="his" src="https://github.com/user-attachments/assets/b559012d-0da4-42b5-9d51-0a809d3412fd" />
-<img width="1337" height="643" alt="Screenshot 2026-06-26 110832" src="https://github.com/user-attachments/assets/21f2ac01-f701-4cb7-a37e-c67031b45663" />
-<img width="1339" height="637" alt="cam1" src="https://github.com/user-attachments/assets/747740db-7624-4851-9e63-0d49353acc2a" />
-<img width="1340" height="640" alt="cam2" src="https://github.com/user-attachments/assets/665b6d2c-64ab-4aa3-b848-3c5f8982d84c" />
-<img width="1337" height="638" alt="cam3" src="https://github.com/user-attachments/assets/a3cbcbdc-565f-42f8-9eaa-c54171a53fdb" />
-<img width="1341" height="639" alt="fedd" src="https://github.com/user-attachments/assets/61da639c-767b-4d33-b721-af6f6e11ade4" />
-<img width="1339" height="640" alt="ad1" src="https://github.com/user-attachments/assets/a11907b8-d9ae-4fb4-935d-87b370b996e7" />
-<img width="1336" height="640" alt="ad2" src="https://github.com/user-attachments/assets/b9991b0a-c2d3-4569-bd8f-a281d96cead5" />
-<img width="1344" height="642" alt="ad3" src="https://github.com/user-attachments/assets/7d95d4dc-c94c-4f82-b69f-5313c81ee000" />
-<img width="1336" height="640" alt="ad2" src="https://github.com/user-attachments/assets/9ef39f96-eb6b-4d94-bd79-407bf0222b1f" />
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cf47c0f9-efd7-42cb-8340-d3dbd82cd628" width="900">
+</p>
 
----
----
+## Login Page
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2a9cf1f9-7683-440f-83d2-c247579287ae" width="900">
+</p>
+
+## Registration Page
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9a93bb9c-1eb4-424b-8799-af49366d9b51" width="900">
+</p>
+
+## Disease Prediction
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2b50f2d1-1166-41a9-b535-6f2ba67431d0" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d220540c-a9bf-4cfd-9a80-4b39e356610d" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/70733c04-d5e6-4c6e-a6c7-c723e98fca3f" width="900">
+</p>
+
+## Prediction History
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b559012d-0da4-42b5-9d51-0a809d3412fd" width="900">
+</p>
+
+## AI Analysis
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/21f2ac01-f701-4cb7-a37e-c67031b45663" width="900">
+</p>
+
+## Grad-CAM Heatmaps
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/747740db-7624-4851-9e63-0d49353acc2a" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/665b6d2c-64ab-4aa3-b848-3c5f8982d84c" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a3cbcbdc-565f-42f8-9eaa-c54171a53fdb" width="900">
+</p>
+
+## Feedback
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/61da639c-767b-4d33-b721-af6f6e11ade4" width="900">
+</p>
+
+## Admin Dashboard
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a11907b8-d9ae-4fb4-935d-87b370b996e7" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b9991b0a-c2d3-4569-bd8f-a281d96cead5" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7d95d4dc-c94c-4f82-b69f-5313c81ee000" width="900">
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9ef39f96-eb6b-4d94-bd79-407bf0222b1f" width="900">
+</p>
 
 # 🚀 Installation
 
