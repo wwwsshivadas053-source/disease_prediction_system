@@ -530,9 +530,9 @@ This project is licensed under the **MIT License**.
 
 ### Connect with Me
 
-- GitHub: https://github.com/yourusername
-- LinkedIn: https://linkedin.com/in/yourprofile
-- Email: yourmail@example.com
+- GitHub: https://github.com/www
+- LinkedIn: [https://linkedin.com/in/yourprofile](https://www.linkedin.com/in/prajwal-t-s-354a57359)
+- Email: prajwalts098@gmail.com
 
 ---
 
